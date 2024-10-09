@@ -1,1 +1,86 @@
-<p>hi!</p>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Awesome Game Site</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f0f0f3;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 2rem;
+            padding: 2rem;
+        }
+
+        .game-card {
+            width: 250px;
+            height: 350px;
+            background: #e0e0e0;
+            border-radius: 20px;
+            box-shadow: 10px 10px 30px #bebebe, -10px -10px 30px #ffffff;
+            overflow: hidden;
+            transition: transform 0.2s ease;
+        }
+
+        .game-card:hover {
+            transform: scale(1.05);
+            box-shadow: 15px 15px 40px #bebebe, -15px -15px 40px #ffffff;
+        }
+
+        .game-card img {
+            width: 100%;
+            height: 70%;
+            object-fit: cover;
+        }
+
+        .game-card .info {
+            padding: 1rem;
+            text-align: center;
+        }
+
+        .game-card .info h3 {
+            margin: 0;
+            color: #333;
+        }
+
+        .game-card .info p {
+            margin: 0.5rem 0;
+            color: #777;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+    </style>
+</head>
+<body>
+    <a href="game1.html" class="game-card">
+        <img src="game1.jpg" alt="Game 1 Image">
+        <div class="info">
+            <h3>Game 1</h3>
+            <p>Click to Play!</p>
+        </div>
+    </a>
+
+    <a href="game2.html" class="game-card">
+        <img src="game2.jpg" alt="Game 2 Image">
+        <div class="info">
+            <h3>Game 2</h3>
+            <p>Click to Play!</p>
+        </div>
+    </a>
+
+    <a href="game3.html" class="game-card">
+        <img src="game3.jpg" alt="Game 3 Image">
+        <div class="info">
+            <h3>Game 3</h3>
+            <p>Click to Play!</p>
+        </div>
+    </a>
+</body>
+</html>

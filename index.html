@@ -28,18 +28,23 @@
             <a href="javascript:void(0);" onclick="showPopup('more-popup')">More</a>
         </nav>
     </header>
+    </div>
+    <input type="text" id="search-input" placeholder="Search game/app/proxy..." onkeyup="filterGames()">
+</div>
+</div>
 
     <div class="container">
         <aside class="sidebar">
             <h2>Popular Games</h2>
             <ul>
-                <li><a href="game1.html">Game 1</a></li>
-                <li><a href="game2.html">Game 2</a></li>
+                <li><a href="html/minecraft-classic/">Minecraft Classic</a></li>
+                <li><a href="html/nzp team/">Npz Cod Zombies</a></li>
                 <li><a href="./html/bitlife/">Bitlife</a></li>
-                <li><a href="game4.html">Game 4</a></li>
-                <li><a href="game5.html">Game 5</a></li>
+                <li><a href="html/cookie-clicker/">Cookie Clicker</a></li>
+                <li><a href="/html/retro-bowl/">Retro Bowl</a></li>
             </ul>
         </aside>
+    </div><div></div>
 
         <main class="game-container">
             <a href="html/yohoho.io/game/index.html" class="game-card">
@@ -54,7 +59,7 @@
             <a href="html/nzp team/index.html" class="game-card">
                 <img src="img/nzp team.jfif" alt="Nzp Team">
                 <div class="info">
-                    <h3>Nzp Team</h3>
+                    <h3>Nzp Cod Zombies</h3>
                     <p>Click to Play!</p>
                 </div>
             </a>
@@ -1372,7 +1377,31 @@
                     <p>Click to Play!</p>
                 </div>
             </a>
+
+            
+            <a href="html/yohoho.io/index.html" class="game-card">
+                <img src="img/yohoho-io.jpg" alt="Yohoho.io">
+                <div class="info">
+                    <h3>Yohoho.io</h3>
+                    <p>Click to Play!</p>
+                </div>
+            </a>
         </main>
+            <script>
+function filterGames() {
+    const input = document.getElementById('search-input').value.toLowerCase();
+    const gameContainers = document.querySelectorAll('.game-card');
+
+    gameContainers.forEach(game => {
+        const gameTitle = game.querySelector('h3').textContent.toLowerCase();
+        if (gameTitle.includes(input)) {
+            game.style.display = ''; // Show matching games
+        } else {
+            game.style.display = 'none'; // Hide non-matching games
+        }
+    });
+}
+</script>
     </div>
 
     <div class="overlay" onclick="closePopup()"></div>

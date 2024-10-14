@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>GameSite - Home</title>
+    <style>
+        /* Reset and Fonts */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #181818;
+            color: #fff;
+            line-height: 1.6;
+        }
+
+        /* Top Navigation Bar */
+        .navbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background-color: #202020;
+            padding: 15px 30px;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .navbar .logo {
+            font-size: 28px;
+            font-weight: bold;
+            color: #fff;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .navbar .logo:hover {
+            color: #1db954;
+        }
+
+        .navbar .search {
+            flex: 1;
+            margin: 0 20px;
+            position: relative;
+        }
+
+        .navbar .search input {
+            width: 100%;
+            padding: 10px 40px 10px 15px;
+            background-color: #282828;
+            border: none;
+            border-radius: 50px;
+            color: #fff;
+            font-size: 16px;
+        }
+
+        .navbar .search i {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #bbb;
+        }
+
+        .navbar .nav-links a {
+            margin-left: 20px;
+            color: #bbb;
+            text-decoration: none;
+            font-size: 16px;
+            position: relative;
+            transition: color 0.3s;
+        }
+
+        .navbar .nav-links a:hover {
+            color: #fff;
+        }
+
+        .navbar .nav-links a::after {
+            content: '';
+            position: absolute;
+            width: 0%;
+            height: 2px;
+            background-color: #1db954;
+            left: 0;
+            bottom: -5px;
+            transition: width 0.3s;
+        }
+
+        .navbar .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        /* Banner */
+        .banner {
+            background-image: url('banner-image.jpg');
+            background-size: cover;
+            background-position: center;
+            padding: 100px 30px;
+            text-align: center;
+        }
+
+        .banner h1 {
+            font-size: 48px;
+            margin-bottom: 20px;
+        }
+
+        .banner p {
+            font-size: 24px;
+            color: #ccc;
+        }
+
+        /* Sections */
+        .section {
+            padding: 50px 30px;
+        }
+
+        .section h2 {
+            font-size: 32px;
+            margin-bottom: 30px;
+            border-left: 5px solid #1db954;
+            padding-left: 15px;
+        }
+
+        /* Game Cards */
+        .games-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(180px, max-content));
+            gap: 30px;
+            justify-content: center;
+        }
+
+        .game-card {
+            background-color: #202020;
+            border-radius: 10px;
+            overflow: hidden;
+            transition: transform 0.3s, box-shadow 0.3s;
+            text-decoration: none;
+            color: #fff;
+            width: 200px;
+            margin: 0 auto;
+        }
+
+        .game-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .image-container {
+            position: relative;
+            width: 100%;
+            padding-top: 56.25%; /* 16:9 Aspect Ratio */
+            overflow: hidden;
+        }
+
+        .image-container img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .play-button {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: rgba(29, 185, 84, 0.8);
+            padding: 10px 20px;
+            border-radius: 50px;
+            color: #fff;
+            font-size: 14px;
+            opacity: 0;
+            transition: opacity 0.3s;
+            text-align: center;
+        }
+
+        .image-container:hover .play-button {
+            opacity: 1;
+        }
+
+        .game-card .info {
+            padding: 15px;
+        }
+
+        .game-card .info h3 {
+            font-size: 18px;
+            margin-bottom: 5px;
+            text-align: center;
+        }
+
+        .game-card .info p {
+            font-size: 14px;
+            color: #aaa;
+            text-align: center;
+        }
+
+        /* Footer */
+        .footer {
+            background-color: #101010;
+            padding: 30px;
+            text-align: center;
+            color: #555;
+            font-size: 14px;
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.9);
+        }
+
+        .modal-content {
+            background-color: #202020;
+            margin: 10% auto;
+            padding: 30px;
+            border-radius: 10px;
+            width: 80%;
+            max-width: 600px;
+            position: relative;
+        }
+
+        .modal-content h2 {
+            margin-bottom: 20px;
+            font-size: 28px;
+        }
+
+        .modal-content p {
+            font-size: 16px;
+            color: #ccc;
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            color: #aaa;
+            font-size: 30px;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .close-modal:hover {
+            color: #fff;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .navbar .logo {
+                font-size: 24px;
+            }
+
+            .banner h1 {
+                font-size: 36px;
+            }
+
+            .banner p {
+                font-size: 18px;
+            }
+
+            .section h2 {
+                font-size: 28px;
+            }
+
+            .game-card .info h3 {
+                font-size: 16px;
+            }
+
+            .game-card {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <a href="#" class="logo">GameSite</a>
+        <div class="search">
+            <input type="text" id="searchInput" placeholder="Search games...">
+            <i class="fa fa-search"></i>
+        </div>
+        <div class="nav-links">
+            <a href="#" data-modal="discordModal">Discord</a>
+            <a href="#" data-modal="aboutModal">About</a>
+            <a href="#" data-modal="contactModal">Contact</a>
+        </div>
+    </nav>
+
+    <!-- Banner Section -->
+    <section class="banner">
+        <h1>Welcome to GameSite</h1>
+        <p>Your portal to endless gaming fun</p>
+    </section>
+
+    <!-- Popular Games Section -->
+    <section class="section" id="popularGames">
+        <h2>Popular Games</h2>
+        <div class="games-grid">
+            <a href="game1.html" class="game-card">
+                <div class="image-container">
+                    <img src="img/bitlife.jpg" alt="Game 1">
+                    <div class="play-button">Play Now</div>
+                </div>
+                <div class="info">
+                    <h3>Game 1</h3>
+                    <p>A thrilling adventure awaits.</p>
+                </div>
+            </a>
+            <a href="game2.html" class="game-card">
+                <div class="image-container">
+                    <img src="img/abandonedgame.jfif" alt="Game 2">
+                    <div class="play-button">Play Now</div>
+                </div>
+                <div class="info">
+                    <h3>Game 2</h3>
+                    <p>Embark on an epic journey.</p>
+                </div>
+            </a>
+        </div>
+    </section>
+
+    <section class="section" id="allGames">
+        <h2>All Games</h2>
+        <div class="games-grid" id="gamesGrid">
+            <a href="game2.html" class="game-card">
+                <div class="image-container">
+                    <img src="img/yohoho.io.jfif" alt="Game 2">
+                    <div class="play-button">Play Now</div>
+                </div>
+                <div class="info">
+                    <h3>Game 2</h3>
+                    <p>Embark on an epic journey.</p>
+                </div>
+            </a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        &copy; 2023 GameSite. All rights reserved.
+    </footer>
+
+    <!-- Modals -->
+    <div id="discordModal" class="modal">
+        <div class="modal-content">
+            <a href="#" class="close-modal" data-close="discordModal">&times;</a>
+            <h2>Join our Discord Community</h2>
+            <p>Connect with fellow gamers and stay updated with the latest news.</p>
+        </div>
+    </div>
+
+    <div id="aboutModal" class="modal">
+        <div class="modal-content">
+            <a href="#" class="close-modal" data-close="aboutModal">&times;</a>
+            <h2>About GameSite</h2>
+            <p>We are dedicated to bringing you the best online gaming experience.</p>
+        </div>
+    </div>
+
+    <div id="contactModal" class="modal">
+        <div class="modal-content">
+            <a href="#" class="close-modal" data-close="contactModal">&times;</a>
+            <h2>Contact Us</h2>
+            <p>Have questions? Reach out to us anytime.</p>
+        </div>
+    </div>
+
+    <script>
+        // Search Functionality
+        document.getElementById('searchInput').addEventListener('keyup', function() {
+            var filter = this.value.toUpperCase();
+            var games = document.querySelectorAll('#allGames .games-grid .game-card');
+            games.forEach(function(game) {
+                var title = game.querySelector('.info h3').textContent;
+                if (title.toUpperCase().indexOf(filter) > -1) {
+                    game.style.display = "";
+                } else {
+                    game.style.display = "none";
+                }
+            });
+        });
+
+        // Modal Functionality
+        var modalLinks = document.querySelectorAll('.nav-links a');
+        var modals = document.querySelectorAll('.modal');
+        var closeButtons = document.querySelectorAll('.close-modal');
+
+        modalLinks.forEach(function(link) {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                var modalId = link.getAttribute('data-modal');
+                document.getElementById(modalId).style.display = 'block';
+                document.body.style.overflow = 'hidden';
+            });
+        });
+
+        closeButtons.forEach(function(button) {
+            button.addEventListener('click', function(e) {
+                e.preventDefault();
+                var modalId = button.getAttribute('data-close');
+                document.getElementById(modalId).style.display = 'none';
+                document.body.style.overflow = 'auto';
+            });
+        });
+
+        window.addEventListener('click', function(e) {
+            modals.forEach(function(modal) {
+                if (e.target == modal) {
+                    modal.style.display = 'none';
+                    document.body.style.overflow = 'auto';
+                }
+            });
+        });
+    </script>
+</body>
+</html>

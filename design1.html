@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Game Site</title>
+    <style>
+        /* Reset Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Body Styling */
+        body {
+            background-color: #121212;
+            font-family: 'Arial', sans-serif;
+            color: #e0e0e0;
+        }
+
+        /* Navigation Menu */
+        nav {
+            background-color: #1f1f1f;
+            padding: 1rem 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+        }
+
+        nav .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #ffffff;
+        }
+
+        nav .nav-right {
+            display: flex;
+            align-items: center;
+        }
+
+        /* Search Bar */
+        .search-bar {
+            position: relative;
+            margin-right: 1rem;
+        }
+
+        .search-bar input {
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            border: none;
+            outline: none;
+            background-color: #2a2a2a;
+            color: #e0e0e0;
+            width: 200px;
+            transition: width 0.3s ease;
+        }
+
+        .search-bar input::placeholder {
+            color: #b0b0b0;
+        }
+
+        .search-bar input:focus {
+            width: 250px;
+        }
+
+        nav .nav-links {
+            list-style: none;
+            display: flex;
+        }
+
+        nav .nav-links li {
+            margin-left: 1rem;
+        }
+
+        nav .nav-links a {
+            text-decoration: none;
+            color: #e0e0e0;
+            font-size: 1rem;
+            transition: color 0.3s;
+            cursor: pointer;
+        }
+
+        nav .nav-links a:hover {
+            color: #bb86fc;
+        }
+
+        /* Menu Toggle Button */
+        nav .menu-toggle {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+        }
+
+        nav .menu-toggle span {
+            width: 25px;
+            height: 3px;
+            background-color: #e0e0e0;
+            margin: 5px 0;
+        }
+
+        /* Container */
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+        }
+
+        /* Popular Games Section */
+        .popular-games {
+            margin-bottom: 2rem;
+        }
+
+        .popular-games h2 {
+            margin-bottom: 1rem;
+            font-size: 1.8rem;
+            color: #ffffff;
+        }
+
+        .popular-games-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        /* Game Grid */
+        .game-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+
+        /* Game Cards */
+        .game-card {
+            background-color: #1e1e1e;
+            border-radius: 8px;
+            overflow: hidden;
+            text-decoration: none;
+            color: inherit;
+            transition: transform 0.3s, box-shadow 0.3s;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+        }
+
+        .game-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .game-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .game-card .info {
+            padding: 1rem;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .game-card .info h3 {
+            margin-bottom: 0.5rem;
+            font-size: 1.2rem;
+            color: #ffffff;
+        }
+
+        .game-card .info p {
+            color: #b0b0b0;
+            font-size: 0.9rem;
+        }
+
+        /* Popup Overlay */
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(18, 18, 18, 0.8);
+            backdrop-filter: blur(5px);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+
+        .overlay.active {
+            display: flex;
+        }
+
+        /* Popup Content */
+        .popup {
+            background-color: #1f1f1f;
+            padding: 2rem;
+            border-radius: 10px;
+            max-width: 500px;
+            width: 90%;
+            color: #e0e0e0;
+            animation: fadeIn 0.3s ease-in-out;
+            position: relative;
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.5);
+        }
+
+        /* Fade In Animation */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        /* Close Button */
+        .close-btn {
+            background: none;
+            border: none;
+            color: #e0e0e0;
+            font-size: 1.5rem;
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            cursor: pointer;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            nav .nav-links {
+                display: none;
+                flex-direction: column;
+                position: absolute;
+                top: 70px;
+                right: 0;
+                background-color: #1f1f1f;
+                width: 200px;
+                padding: 1rem;
+            }
+
+            nav.active .nav-links {
+                display: flex;
+            }
+
+            nav .nav-links li {
+                margin-left: 0;
+                margin-bottom: 1rem;
+            }
+
+            nav .menu-toggle {
+                display: flex;
+            }
+
+            .search-bar {
+                display: none;
+            }
+
+            nav .nav-right {
+                flex-direction: row-reverse;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation Menu -->
+    <nav>
+        <div class="logo">GameSite</div>
+        <div class="nav-right">
+            <!-- Search Bar -->
+            <div class="search-bar">
+                <input type="text" placeholder="Search games...">
+            </div>
+            <ul class="nav-links">
+                <!-- Removed Home Button -->
+                <li><a href="#" data-popup="games">Games</a></li>
+                <li><a href="#" data-popup="about">About</a></li>
+                <li><a href="#" data-popup="contact">Contact</a></li>
+            </ul>
+            <!-- Menu Toggle Button for Mobile -->
+            <div class="menu-toggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Popup Overlay -->
+    <div class="overlay" id="popup-overlay">
+        <div class="popup" id="popup-content">
+            <button class="close-btn" id="close-popup">&times;</button>
+            <!-- Popup content will be injected here -->
+            <div id="popup-body"></div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="container">
+        <!-- Popular Games Section -->
+        <section class="popular-games">
+            <h2>Popular Games</h2>
+            <div class="popular-games-grid">
+                <a href="popular-gamepath1" class="game-card"> 
+                    <img src="img/bitlife.jpg" alt="Popular Game 1"> 
+                    <div class="info">
+                        <h3>Popular Game 1</h3> 
+                        <p>Most played game!</p>
+                    </div>
+                </a>
+                <a href="popular-gamepath2" class="game-card"> 
+                    <img src="img/nzp team.jfif" alt="Popular Game 2"> 
+                    <div class="info">
+                        <h3>Popular Game 2</h3> 
+                        <p>Fan favorite!</p>
+                    </div>
+                </a>
+                <!-- Add more popular game cards as needed -->
+            </div>
+        </section>
+        <h2>All Games</h2>
+        <!-- Game Cards -->
+        <div class="game-grid">
+            <a href="gamepath1" class="game-card"> 
+                <img src="img/biters.webp" alt="Game Name 1"> 
+                <div class="info">
+                    <h3>Game Name 1</h3> 
+                    <p>Exciting adventure awaits!</p>
+                </div>
+            </a>
+            <a href="gamepath2" class="game-card"> 
+                <img src="img/yohoho.io.jfif" alt="Game Name 2"> 
+                <div class="info">
+                    <h3>Game Name 2</h3> 
+                    <p>Challenge your skills!</p>
+                </div>
+            </a>
+        </div>
+    </div>
+
+    <!-- JavaScript for Menu Toggle and Popups -->
+    <script>
+        const menuToggle = document.querySelector('.menu-toggle');
+        const nav = document.querySelector('nav');
+        const navLinks = document.querySelectorAll('.nav-links a');
+        const overlay = document.getElementById('popup-overlay');
+        const popupBody = document.getElementById('popup-body');
+        const closePopup = document.getElementById('close-popup');
+
+        menuToggle.addEventListener('click', () => {
+            nav.classList.toggle('active');
+        });
+
+        navLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const popupType = link.getAttribute('data-popup');
+                showPopup(popupType);
+            });
+        });
+
+        closePopup.addEventListener('click', () => {
+            overlay.classList.remove('active');
+        });
+
+        function showPopup(type) {
+            let content = '';
+            if (type === 'games') {
+                content = '<h2>Our Games</h2><p>Discover a variety of exciting games to play!</p>';
+            } else if (type === 'about') {
+                content = '<h2>About Us</h2><p>Learn more about our mission and team.</p>';
+            } else if (type === 'contact') {
+                content = '<h2>Contact Us</h2><p>Get in touch with us for any inquiries.</p>';
+            }
+            popupBody.innerHTML = content;
+            overlay.classList.add('active');
+        }
+
+        // Close popup when clicking outside the popup content
+        overlay.addEventListener('click', (e) => {
+            if (e.target === overlay) {
+                overlay.classList.remove('active');
+            }
+        });
+    </script>
+</body>
+</html>

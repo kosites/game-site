@@ -28,6 +28,10 @@
             <a href="javascript:void(0);" onclick="showPopup('more-popup')">More</a>
         </nav>
     </header>
+    </div>
+    <input type="text" id="search-input" placeholder="Search game/app/proxy..." onkeyup="filterGames()">
+</div>
+</div>
 
     <div class="container">
         <aside class="sidebar">
@@ -40,6 +44,7 @@
                 <li><a href="/html/retro-bowl/">Retro Bowl</a></li>
             </ul>
         </aside>
+    </div><div></div>
 
         <main class="game-container">
             <a href="html/nzp team/index.html" class="game-card">
@@ -1373,6 +1378,21 @@
                 </div>
             </a>
         </main>
+            <script>
+function filterGames() {
+    const input = document.getElementById('search-input').value.toLowerCase();
+    const gameContainers = document.querySelectorAll('.game-card');
+
+    gameContainers.forEach(game => {
+        const gameTitle = game.querySelector('h3').textContent.toLowerCase();
+        if (gameTitle.includes(input)) {
+            game.style.display = ''; // Show matching games
+        } else {
+            game.style.display = 'none'; // Hide non-matching games
+        }
+    });
+}
+</script>
     </div>
 
     <div class="overlay" onclick="closePopup()"></div>
